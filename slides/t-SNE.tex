@@ -2,6 +2,7 @@
 \usepackage{bbm}
 \usepackage{fontspec}
 
+\usepackage{mathtools}
 \usepackage{graphicx}
 \usepackage{animate}
 \renewcommand\appendixname{Appendix}
@@ -72,8 +73,36 @@
 }
 \begin{frame}{Summary}
   \begin{enumerate}
-    \item aaa
+    \item Entropy and Kullback–Leibler divergence
+    \item From SNE to t-SNE
+    \item Application for Visualization
+    \item Issues
   \end{enumerate}
+\end{frame}
+\begin{frame}{t-SNE}{}
+
+  {\bf Main Papers}\\
+    Stochastic Neighbor Embedding - Hinton \& Roweis - 2002\\
+    Visualizing Data using t-SNE - Maaten \& Hinton - 2008\\
+    \vfill
+  {\bf Aim : Visualize Data}
+  \begin{equation}
+    \begin{rcases}
+      x\in\R^n \\
+      \mbox{Images} \\
+      \mbox{Text}
+    \end{rcases}\overset{\Phi}{\longrightarrow} \R^2
+  \end{equation}
+
+  
+\end{frame}
+\section{Entropy}
+\begin{frame}{Shannon Entropy}{}
+  {\it ``The Entropy measures the complexity of the information''}
+  \begin{equation}
+    H(p_1,\cdots,p_n) = -\frac{1}{n}\sum_i p_i\log_2(p_i)
+    \label{entropy}
+  \end{equation}
 \end{frame}
 \end{document}
 
