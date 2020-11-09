@@ -142,16 +142,17 @@
 \begin{frame}{Algorithm: Similarity and Probability Distribution}
   \begin{defn}[Similarity with Gaussian Kernel]
     \vspace{1px}
-    For each $x_i$ we fix a $\sigma_i$ and define
+    For each $x_i$ we consider the similarity
     \begin{equation}
       \forall j\ne i,\quad p_{i|j}  = \frac{\exp\left(-\|x_i -
       x_j\|^2/(2\sigma_i)^2\right)}{\sum_{k\ne i}\exp\left(-\|x_i - x_k\|^2 /
     (2\sigma_i)^2\right)}
       \tag{$\PP_i$}
     \end{equation}
+    where $\sigma_i$ is an hyper-parameter depending on $x_i$.
   \end{defn}
   \onslide<2->
-    {\bf How $\sigma_i$ impacts?}
+  {\bf How $\sigma_i$ impacts on $p_{i|j}$?}
   \begin{figure}[h!]
     \centering
     \includegraphics<2>[scale=0.4, trim=0 0 0 1cm]{{pic/similarity_0.1}.pdf}%
@@ -162,9 +163,9 @@
   \end{figure}
 \end{frame}
 \begin{frame}{Algorithm: Similarity and Probability Distribution}
-  At the same manner we can define similarity in $\YY$.
+  In the same manner we can define similarity in $\YY$.
   \begin{equation}
-    \forall j\ne i,\quad q_{i|j}  = \frac{\exp\left(-\|y_i -
+      \forall j\ne i,\quad q_{i|j}  = \frac{\exp\left(-\|y_i -
     y_j\|^2\right)}{\sum_{k\ne i}\exp\left(-\|y_i - y_k\|^2\right)}
     \tag{$\QQ_i$}
   \end{equation}
@@ -176,7 +177,49 @@
   \item $\sum_{j\ne i} p_{i|j} = \sum_{j\ne i} q_{i|j} = 1 $
 \end{enumerate}
 \end{frame}
-\begin{frame}{Shannon Entropy, Perplexity, Kullback–Leibler Divergence}{}
+\begin{frame}{Algorithm: Kullback-Leibler Divergence}{}
+  \begin{defn}[K.L Divergence]
+    \vspace{1px}
+    Let $ \PP=\{p_1, \cdots, p_n\}$ and $\QQ=\{q_1,\cdots,q_n\}$  distributions
+    \begin{equation}
+      KL(\PP,\QQ) = \sum_i p_i\log_2\left( \frac{p_i}{q_i} \right)
+    \end{equation}
+  \end{defn}
+  We can compare $\PP_i,\,\QQ_i$ for each $i$ by taking
+  \begin{equation}
+   C(\YY) := \sum_i KL(\PP_i,\QQ_i)
+  \end{equation}
+  {\bf Observation:} The cost function $C$ is differentiable in $y_i$
+  \begin{equation}
+    \begin{aligned}
+      \frac{\partial C}{\partial y_i} &= 2\sum_{j\ne i}\left( p_{i|j} + p_{j|i} - q_{i|j}
+      - q_{j|i} \right) \left( y_i - y_j \right)\\
+      &= \underset{\mbox{Attractive}}{\left[\sum_{j\ne i} \left( p_{i|j} + p_{j|i}
+      \right)(y_i-y_j)\right]} - \underset{\mbox{Repulsive}}{\left[\sum_{j\ne i}
+          \left( q_{i|j}+q_{j|i}\right)\left( y_i-y_j \right)\right]}
+    \end{aligned}
+  \end{equation}
+\end{frame}
+\begin{frame}{Algorithm: Summary}{}
+  {\bf SNE Algorithm}
+  \begin{enumerate}
+    \item Choose $\Phi^{(0)}$ embedding, i.e choose $\{y_i^{(0)}\}$
+    \item Compute $\PP_i$ and $\QQ_i$ distributions.
+    \item Minimize $C(\YY)$ through Gradient Descent with momentum 
+      \[
+        y_i^{(t+1)} = y_i^{(t)} - \eta \frac{\partial C}{\partial y_i} +
+        \alpha \left( y_i^{(t)} - y_i^{(t-1)} \right),\quad
+        \forall i
+      \]
+  \end{enumerate}
+  \vfill
+  \onslide<2->
+  \begin{center}
+    {\bf\large How to find $\sigma_i$?}
+  \end{center}
+\end{frame}
+\section{Shannon Entropy}
+\begin{frame}{Shannon Entropy, Perplexity}{}
   %{\it ``The Entropy measures the complexity of the information''}\\
   \vfill
   Let $ \PP=\{p_1, \cdots, p_n\}$ and $\QQ=\{q_1,\cdots,q_n\}$  distributions
@@ -185,8 +228,6 @@
       \mbox{\bf Shannon Entropy}\qquad &\HBB(\PP) =
       -\sum_i p_i\log_2(p_i)\\
       \mbox{\bf Perplexity} \qquad & Perp(\PP) = 2^{\HBB(\PP)}\\
-      \mbox{\bf K.L. Divergence} \qquad & KL(\PP,\QQ) = \sum_i
-      p_i\log_2\left( \frac{p_i}{q_i} \right)\\
     \end{aligned}
     \label{entropy}
   \end{equation*}
