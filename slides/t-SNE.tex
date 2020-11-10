@@ -190,16 +190,18 @@
   \begin{equation}
    C(\YY) := \sum_i KL(\PP_i,\QQ_i)
   \end{equation}
+  \pause[2]
   {\bf Observation:} The cost function $C$ is differentiable in $y_i$
   \begin{equation}
     \begin{aligned}
-      \frac{\partial C}{\partial y_i} &= 2\sum_{j\ne i}\left( p_{i|j} + p_{j|i} - q_{i|j}
-      - q_{j|i} \right) \left( y_i - y_j \right)\\
-      &= 2\sum_{j\ne i} \underset{\mbox{Attractive}}{\left[\left( p_{i|j} + p_{j|i}
-      \right)(y_i-y_j)\right]} - \underset{\mbox{Repulsive}}{\left[
+      \frac{\partial C}{\partial y_i} %&= 2\sum_{j\ne i}\left( p_{i|j} + p_{j|i} - q_{i|j}
+      %- q_{j|i} \right) \left( y_i - y_j \right)\\
+      &= 2\sum_{j\ne i} \underset{\mbox{\color{grey}Attractive}}{\left[\left( p_{i|j} + p_{j|i}
+      \right)(y_i-y_j)\right]} - \underset{\mbox{\color{grey}Repulsive}}{\left[
           \left( q_{i|j}+q_{j|i}\right)\left( y_i-y_j \right)\right]}
     \end{aligned}
   \end{equation}
+  {\bf Intepretation:} $C$ penalizes close $x_i,\,x_j$ and far $y_i,\,y_j$.
 \end{frame}
 \begin{frame}{Algorithm: Summary}{}
   {\bf SNE Algorithm}
@@ -303,8 +305,44 @@
       \[
         C(\YY) = KL(\PP,\QQ)
       \]
-    \end{enumerate}
-    \end{frame}
+  \end{enumerate}
+\end{frame}
+\section{Examples}
+\begin{frame}{t-SNE on cortex's cells}
+  \begin{figure}[h!]
+    \centering
+    \includegraphics[scale=0.27]{./pic/cells.png}
+    \caption{Image taken from Kobak-Barens paper.}
+    \label{cortex}
+  \end{figure}
+  An hand made hierarchical clustering of cortex's cell is visualized
+  through t-SNE\@. PCA is able to find the main three clusters but not to
+  distinguish the sub-clusters.
+\end{frame}
+\begin{frame}{t-SNE on cortex' cells: Metrics Evaluations}
+  \begin{itemize}
+    \item {\bf KNN:} local metric. For each samples $x_i\in\XX$ and its
+      image $y_i\in\YY$ we take the first k-closest points $K_i$ and $H_i$
+      and we evaluate
+      \[
+        KNN := \frac{1}{|\XX|}\sum_i \frac{|H_i\cap \Phi(K_i)|}{k}
+      \]
+    \item {\bf KNC:} Cluster metric. The same as KNN but applied to
+      $c_1,\cdots,c_s$ cluster's centroids.
+    \item {\bf CPD:} Global metric. Defined as the Spearmen
+      correlation.
+  \end{itemize}
+  Looking at figure~\ref{cortex} locally t-SNE performs better, globally PCA
+  performs better.
+\end{frame}
+
+\begin{frame}{t-SNE on MNIST}
+  \begin{figure}[h!]
+    \centering
+    \includegraphics[scale=0.4]{./pic/MNIST.png}
+    \caption{\vspace{1px} Image taken from Maaten - Hinton paper}
+  \end{figure}
+\end{frame}
 \end{document}
   \begin{figure}[h!]
     \centering
