@@ -2,6 +2,7 @@
 \usepackage{bbm}
 \usepackage{fontspec}
 
+\usepackage{algorithm2e}
 \usepackage{mathtools}
 \usepackage{graphicx}
 \usepackage{animate}
@@ -136,7 +137,7 @@
   \begin{obs}
     The embedding $\Phi$ is defined {\bf point-wise}, i.e $\Phi$ is only defined over
     $\XX$ through the definition $\Phi(x_i) = y_i$. Another way to say
-    ``$y_i$ are the parameters of $\Phi$'' (Future works?).
+    ``$y_i$ are the parameters of $\Phi$''.
   \end{obs}
 \end{frame}
 \begin{frame}{Algorithm: Similarity and Probability Distribution}
@@ -194,8 +195,8 @@
     \begin{aligned}
       \frac{\partial C}{\partial y_i} &= 2\sum_{j\ne i}\left( p_{i|j} + p_{j|i} - q_{i|j}
       - q_{j|i} \right) \left( y_i - y_j \right)\\
-      &= \underset{\mbox{Attractive}}{\left[\sum_{j\ne i} \left( p_{i|j} + p_{j|i}
-      \right)(y_i-y_j)\right]} - \underset{\mbox{Repulsive}}{\left[\sum_{j\ne i}
+      &= 2\sum_{j\ne i} \underset{\mbox{Attractive}}{\left[\left( p_{i|j} + p_{j|i}
+      \right)(y_i-y_j)\right]} - \underset{\mbox{Repulsive}}{\left[
           \left( q_{i|j}+q_{j|i}\right)\left( y_i-y_j \right)\right]}
     \end{aligned}
   \end{equation}
@@ -218,11 +219,11 @@
     {\bf\large How to find $\sigma_i$?}
   \end{center}
 \end{frame}
-\section{Shannon Entropy}
-\begin{frame}{Shannon Entropy, Perplexity}{}
+\section{Perplexity}
+\begin{frame}{Perplexity: Shannon Entropy and Neighborhood}{}
   %{\it ``The Entropy measures the complexity of the information''}\\
   \vfill
-  Let $ \PP=\{p_1, \cdots, p_n\}$ and $\QQ=\{q_1,\cdots,q_n\}$  distributions
+  Let $ \PP=\{p_1, \cdots, p_n\}$ be a distribution
   \begin{equation*}
     \begin{aligned}
       \mbox{\bf Shannon Entropy}\qquad &\HBB(\PP) =
@@ -232,14 +233,81 @@
     \label{entropy}
   \end{equation*}
   \begin{minipage}[h!]{\textwidth}
-    {\bf How $\sigma_i$ and Perplexity are related?}
+    {\bf How $\sigma_i$ and Perplexity are related to each other?}
     \begin{figure}[h!]
       \centering
       \includegraphics[clip, scale=0.32, trim=0 0 0
       1cm]{./pic/perplexity.pdf}
-      \caption{Perplexity measures the number of samples in a neighborhood.}
+      \caption{Perplexity measures the number of samples in a
+        neighborhood.\footnote{Original paper doesn't provide a proof, let us
+      take it as an intuition.}}
     \end{figure}
   \end{minipage}
 \end{frame}
+\begin{frame}{Perplexity: Derivation of $\sigma$}
+  \begin{obs}
+    \vspace{1px}
+    Perplexity of $\PP_i$ is continuous monotonic in $\sigma_i$.
+  \end{obs}
+  \vfill
+  {\bf Binary Search:} Find $\sigma_i$ such that $Perp(\PP_i(\sigma_i))= K$\\
+%  \begin{enumerate}
+%    \item Fix a value $N_i$ of perplexity.
+%    \item Initialize $\sigma_i^{(l)}$ such that $Perp(\PP_i)>N_i$
+%    \item Initialize $\sigma_i^{(r)}$ such that $Perp(\PP_i)<N_i$
+%    \item Until Convergence
+%      \begin{itemize}
+%        \item Compute the mean value $\bar{\sigma}$.
+%        \item If $Perp(\PP_i(\bar{\sigma})>N_i$ then
+%            $\sigma_i^{(r)}=\bar\sigma$
+%        \item If $Perp(\PP_i(\bar{\sigma})<N_i$ then
+%            $\sigma_i^{(l)}=\bar\sigma$
+%      \end{itemize}
+%  \end{enumerate}
+  \begin{algorithm}[H]
+    \SetKwInOut{Input}{input}\SetKwInOut{Output}{output}
+    \SetAlgoLined
+    $\sigma^{(l)}$ such that $Perp(\PP_i(\sigma^{(l)}))<K$\;
+    $\sigma^{(r)}$ such that $Perp(\PP_i(\sigma^{(r)}))>K$\;
+    \While{$|\sigma^{(r)} - \sigma^{(l)}| < \varepsilon$}{%
+      $\bar\sigma\leftarrow (\sigma^{(l)} + \sigma^{(l)})/2$\;
+      $p\leftarrow Perp(\PP_i(\bar\sigma))$\;
+      \uIf{$p<K$}{%
+        $\sigma^{(l)}\leftarrow\bar\sigma$;
+      }
+      \Else{%
+        $\sigma^{(r)}\leftarrow\bar\sigma$;
+      }
+    }
+    \Return{$\bar\sigma$}
+  \end{algorithm}
+\end{frame}
+\section{t-SNE is t+SNE}
+\begin{frame}{t-SNE: Symmetric + Student}
+  In order to achieve better results Maaten \& Hinton modified SNE by
+  \begin{enumerate}
+    \item Using Student t-distribution for $\YY$
+      \[
+        \forall i,\quad
+        q_{i|j} = \frac{(1+\|y_i-y_j\|)^{-1}}{\sum_{k\ne i}\left( 1+\|y_i +
+        y_j\|\right)^{-1}},\quad \forall j\ne i
+      \]
+    \item Using symmetric versions of $p_{i|j},\,q_{i|j}$ by defining
+      \[
+        p_{ij}=\left( p_{i|j} + p_{j|i} \right)/(2n),\quad q_{ij}=\left(
+        q_{i|j} + q_{j|i} \right)/(2n)
+      \]
+      so that $\PP = \left\{ p_{ij} \right\}$ and $\QQ=\left\{ q_{ij}
+      \right\}$ are joint probabilities.
+    \item The cost function becomes
+      \[
+        C(\YY) = KL(\PP,\QQ)
+      \]
+    \end{enumerate}
+    \end{frame}
 \end{document}
+  \begin{figure}[h!]
+    \centering
+    \includegraphics[scale=0.17]{./pic/gradient.png}
+  \end{figure}
 
