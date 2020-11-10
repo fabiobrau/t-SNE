@@ -332,10 +332,10 @@
     \item {\bf CPD:} Global metric. Defined as the Spearmen
       correlation.
   \end{itemize}
-  Looking at figure~\ref{cortex} locally t-SNE performs better, globally PCA
-  performs better.
+  These metrics in the figure~\ref{cortex} shows that t-SNE performs
+  better in preserving local structures and worst in preserving the global
+  structure of the data\footnote{Kobak-Barens paper for more details.}.
 \end{frame}
-
 \begin{frame}{t-SNE on MNIST}
   \begin{figure}[h!]
     \centering
@@ -343,6 +343,64 @@
     \caption{\vspace{1px} Image taken from Maaten - Hinton paper}
   \end{figure}
 \end{frame}
+\section{t-SNE Warnings}
+\begin{frame}{How to use t-SNE\footnote{In this section we will show the results in
+  \href{https://distill.pub/2016/misread-tsne}{\color{ggreen}Wattenberg -
+online paper.}}}{}
+\begin{center}
+  \bf Hyper-Parameters really matter.
+\end{center}
+\begin{figure}[h!]
+  \centering
+  \includegraphics[scale=0.2, trim=3cm 0 0 0]{./pic/choose_perp.png}
+\end{figure}
+\begin{figure}[h!]
+  \centering
+  \includegraphics[scale=0.2, trim=2cm 0 0 3cm]{./pic/choose_steps.png}
+\end{figure}
+\hspace{3cm}
+\end{frame}
+\begin{frame}{How to use t-SNE}
+  \begin{center}
+    \bf
+    Cluster sizes in a t-SNE plot has no meaning.
+  \end{center}
+  \begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.2, trim=2cm 0 0 0]{./pic/cluster_size.png}
+  \end{figure}
+\end{frame}
+\begin{frame}{How to use t-SNE}
+  \begin{center}
+    \bf
+    There is not control of the distances between clusters.
+  \end{center}
+  \begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.2, trim=2cm 0 0 2cm]{./pic/cluster_dist1.png}
+  \end{figure}
+  \begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.2, trim=2.3cm 0 0 3cm]{./pic/cluster_dist2.png}
+  \end{figure}
+  {\it Different initializations produce visualizations within clusters at
+  different distances.}
+\end{frame}
+\begin{frame}{How to use t-SNE}
+  \begin{center}
+    \bf Topologists are not glad.
+  \end{center}
+  \begin{figure}[h!]
+    \centering
+    \includegraphics[scale=0.2, trim = 2cm 0 0 0]{pic/topology.png}
+  \end{figure}
+\end{frame}
+\begin{frame}{Conclusion}{}
+    \begin{center}
+       \Large
+      Thanks for the attention.
+    \end{center}
+  \end{frame}
 \end{document}
   \begin{figure}[h!]
     \centering
