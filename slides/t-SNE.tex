@@ -84,21 +84,24 @@
   \end{enumerate}
 \end{frame}
 \begin{frame}{Introduction}{}
-%  {\bf Main Papers}\\
-%    Stochastic Neighbor Embedding - Hinton \& Roweis - 2002\\
-%    Visualizing Data using t-SNE - Maaten \& Hinton - 2008\\
 %    \vfill
   \begin{center}
     (t)-{\bf S}tochastic {\bf N}eighborhood {\bf E}mbedding
   \end{center}
-  \begin{minipage}{0.4\textwidth}
+  \begin{minipage}{0.53\textwidth}
+    {\bf Main Papers}
+    \begin{itemize}
+      \item Stochastic Neighbor Embedding - Hinton \& Roweis - 2002\\
+      \item Visualizing Data using t-SNE - Maaten \& Hinton - 2008\\
+    \end{itemize}
+    \vspace{0.75cm}
     {\bf Aims}
     \begin{itemize}
       \item Dimensionality Reduction
       \item Data Visualization
         \begin{enumerate}
           \item Exploration
-          \item Visual Clustering
+          \item Clusters Visualization
         \end{enumerate}
     \end{itemize}
   \end{minipage}\hfill
@@ -110,8 +113,8 @@
     \end{figure}
   \end{minipage} 
 \end{frame}
-\section{Algorithm}
-\begin{frame}{Algorithm: Workflow}
+\section{SNE Algorithm}
+\begin{frame}{SNE algorithm: Workflow}
   \begin{enumerate}
     \item Represent each sample $x_i \in\XX$ with $y_i\in\YY$ in a
       low-dimensional space
@@ -140,7 +143,7 @@
     ``$y_i$ are the parameters of $\Phi$''.
   \end{obs}
 \end{frame}
-\begin{frame}{Algorithm: Similarity and Probability Distribution}
+\begin{frame}{SNE algorithm: Similarity and Probability Distribution}
   \begin{defn}[Similarity with Gaussian Kernel]
     \vspace{1px}
     For each $x_i$ we consider the similarity
@@ -163,7 +166,7 @@
     \includegraphics<6->[scale=0.4, trim=0 0 0 1cm]{{pic/similarity_2.0}.pdf}%
   \end{figure}
 \end{frame}
-\begin{frame}{Algorithm: Similarity and Probability Distribution}
+\begin{frame}{SNE algorithm: Similarity and Probability Distribution}
   In the same manner we can define similarity in $\YY$.
   \begin{equation}
       \forall j\ne i,\quad q_{i|j}  = \frac{\exp\left(-\|y_i -
@@ -178,7 +181,7 @@
   \item $\sum_{j\ne i} p_{i|j} = \sum_{j\ne i} q_{i|j} = 1 $
 \end{enumerate}
 \end{frame}
-\begin{frame}{Algorithm: Kullback-Leibler Divergence}{}
+\begin{frame}{SNE algorithm: Kullback-Leibler Divergence}{}
   \begin{defn}[K.L Divergence]
     \vspace{1px}
     Let $ \PP=\{p_1, \cdots, p_n\}$ and $\QQ=\{q_1,\cdots,q_n\}$  distributions
@@ -203,7 +206,7 @@
   \end{equation}
   {\bf Intepretation:} $C$ penalizes close $x_i,\,x_j$ and far $y_i,\,y_j$.
 \end{frame}
-\begin{frame}{Algorithm: Summary}{}
+\begin{frame}{SNE algorithm: Summary}{}
   {\bf SNE Algorithm}
   \begin{enumerate}
     \item Choose $\Phi^{(0)}$ embedding, i.e choose $\{y_i^{(0)}\}$
@@ -388,12 +391,36 @@ online paper.}}}{}
 \end{frame}
 \begin{frame}{How to use t-SNE}
   \begin{center}
-    \bf Topologists are not glad.
+    \bf Sometimes topology is not preserved.
   \end{center}
   \begin{figure}[h!]
     \centering
     \includegraphics[scale=0.2, trim = 2cm 0 0 0]{pic/topology.png}
   \end{figure}
+\end{frame}
+\begin{frame}{Conclusion}
+  \begin{minipage}{0.45\textwidth}
+    \begin{center}
+      {\bf What is t-SNE good for}
+    \end{center}
+    \begin{enumerate}
+      \item Exploring data making associations based on geometrical
+        informations in the original space.
+      \item Providing intuition over the data that can be established  with different
+        techniques.
+    \end{enumerate}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[h!]{0.45\textwidth}
+    \begin{center}
+      {\bf How to not use t-SNE}
+    \end{center}
+    \begin{enumerate}
+      \item For evaluate distances between clusters.
+      \item For evaluate density of clusters.
+      \item Establish topological property.
+    \end{enumerate}
+  \end{minipage}
 \end{frame}
 \begin{frame}{Conclusion}{}
     \begin{center}
