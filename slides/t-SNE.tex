@@ -26,7 +26,7 @@
 \usepackage{pgfplots}
 \usepgfplotslibrary{dateplot}
 \setbeamertemplate{caption}{\raggedright\insertcaption\par}
-\setlength{\abovecaptionskip}{-10pt plus 0pt minus 0pt}
+%\setlength{\abovecaptionskip}{-5pt plus 0pt minus 0pt}
 
 \usepackage{xspace}
 \newcommand{\themename}{\textbf{\textsc{metropolis}}\xspace}
@@ -294,8 +294,8 @@
     \item Using Student t-distribution for $\YY$
       \[
         \forall i,\quad
-        q_{i|j} = \frac{(1+\|y_i-y_j\|)^{-1}}{\sum_{k\ne i}\left( 1+\|y_i +
-        y_j\|\right)^{-1}},\quad \forall j\ne i
+        q_{i|j} = \frac{(1+\|y_i-y_j\|^2)^{-1}}{\sum_{k\ne i}\left( 1+\|y_i +
+        y_j\|^2\right)^{-1}},\quad \forall j\ne i
       \]
     \item Using symmetric versions of $p_{i|j},\,q_{i|j}$ by defining
       \[
@@ -309,6 +309,26 @@
         C(\YY) = KL(\PP,\QQ)
       \]
   \end{enumerate}
+\end{frame}
+\begin{frame}{t-SNE: Cost Interpretation}
+  Let we consider a dummy case $\XX=\left\{ x_1,x_2 \right\}$. Then
+  \begin{equation}
+    \begin{aligned}
+    \mbox{\bf SNE}\quad (\nabla C)_1 &=
+      2(p_{1|2}+p_{2|1}-q_{1|2}-q_{2|1})(y_1-y_2)\\
+      \mbox{\bf t-SNE}\quad (\nabla C )_1 &=
+      4(p_{12}-q_{12})\left( y_1-y_2 \right)\left( 1+\|y_1 - y_2\|^2
+      \right)^{-1}\\
+    \end{aligned}
+  \end{equation}
+  {\bf Observation:} Both depends only on $\|x_1 -x_2\|$ and $\|y_1 -y_2\|$.
+  \begin{figure}[h!]
+    \centering
+    \includegraphics[scale=0.17]{./pic/gradient.png}
+    \caption{Image taken from Maaten \& Hinton's paper representing $\|\nabla
+      C\|$ for different distances in the input-space and in the embedding
+    space.}
+  \end{figure}
 \end{frame}
 \section{Examples}
 \begin{frame}{t-SNE on cortex's cells}
@@ -429,8 +449,4 @@ online paper.}}}{}
     \end{center}
   \end{frame}
 \end{document}
-  \begin{figure}[h!]
-    \centering
-    \includegraphics[scale=0.17]{./pic/gradient.png}
-  \end{figure}
 
