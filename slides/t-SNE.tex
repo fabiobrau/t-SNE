@@ -326,6 +326,24 @@
   \end{figure}
 \end{frame}
 \section{Examples}
+\begin{frame}{t-SNE on MNIST}
+  \begin{minipage}[h]{0.5\textwidth}
+    \begin{figure}[h!]
+      \centering
+      \includegraphics[scale=0.2,trim=15cm 0 0 0]{./pic/PCA.png}
+      \caption{PCA visualization. First two principal components.}
+    \end{figure}
+  \end{minipage}%
+  \hfill
+  \begin{minipage}[h]{0.4\textwidth}
+    \begin{figure}[h!]
+      \centering
+      \includegraphics[scale=0.2, trim=0 0 5cm 0]{./pic/MNIST.png}
+      \caption{t-SNE visualization. Image taken from Maaten -
+      Hinton paper}
+    \end{figure}
+  \end{minipage}
+\end{frame}
 \begin{frame}{t-SNE on cortex's cells}
   \begin{figure}[h!]
     \centering
@@ -353,13 +371,6 @@
   These metrics in the figure~\ref{cortex} shows that t-SNE performs
   better in preserving local structures and worst in preserving the global
   structure of the data\footnote{Kobak-Barens paper for more details.}.
-\end{frame}
-\begin{frame}{t-SNE on MNIST}
-  \begin{figure}[h!]
-    \centering
-    \includegraphics[scale=0.35]{./pic/MNIST.png}
-    \caption{\vspace{1px} Image taken from Maaten - Hinton paper}
-  \end{figure}
 \end{frame}
 \section{t-SNE Warnings}
 \begin{frame}{How to use t-SNE\footnote{In this section we will show the results in
