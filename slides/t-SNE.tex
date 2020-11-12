@@ -357,8 +357,8 @@
 \end{frame}
 \begin{frame}{t-SNE on cortex' cells: Metrics Evaluations}
   \begin{itemize}
-    \item {\bf KNN:} local metric. For each samples $x_i\in\XX$ and its
-      image $y_i\in\YY$ we take the first k-closest points $K_i$ and $H_i$
+    \item {\bf KNN:} local metric. For each sample $x_i\in\XX$ and its
+      image $y_i\in\YY$ we take the first $k$ closest points $K_i$ and $H_i$
       and we evaluate
       \[
         KNN := \frac{1}{|\XX|}\sum_i \frac{|H_i\cap \Phi(K_i)|}{k}
@@ -368,9 +368,9 @@
     \item {\bf CPD:} Global metric. Defined as the Spearmen
       correlation.
   \end{itemize}
-  These metrics in the figure~\ref{cortex} shows that t-SNE performs
+  Metrics in figure~\ref{cortex} shows that t-SNE performs
   better in preserving local structures and worst in preserving the global
-  structure of the data\footnote{Kobak-Barens paper for more details.}.
+  structure\footnote{Kobak-Barens paper for more details.}.
 \end{frame}
 \section{t-SNE Warnings}
 \begin{frame}{How to use t-SNE\footnote{In this section we will show the results in
