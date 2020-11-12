@@ -270,7 +270,7 @@
     $\sigma^{(l)}$ such that $Perp(\PP_i(\sigma^{(l)}))<K$\;
     $\sigma^{(r)}$ such that $Perp(\PP_i(\sigma^{(r)}))>K$\;
     \While{$|\sigma^{(r)} - \sigma^{(l)}| < \varepsilon$}{%
-      $\bar\sigma\leftarrow (\sigma^{(l)} + \sigma^{(l)})/2$\;
+      $\bar\sigma\leftarrow (\sigma^{(l)} + \sigma^{(r)})/2$\;
       $p\leftarrow Perp(\PP_i(\bar\sigma))$\;
       \uIf{$p<K$}{%
         $\sigma^{(l)}\leftarrow\bar\sigma$;
